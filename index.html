@@ -1,70 +1,15 @@
-<canvas id=foo width=300 height=300></canvas>
+<div id="bm" style="width:100px;height:200px;"></div>
 
-<script type="text/javascript"
-  src="https://unpkg.com/canvaskit-wasm@0.19.0/bin/canvaskit.js">
-</script>
-<script type="text/javascript">
-  const ckLoaded = CanvasKitInit({
-    locateFile: (file) => 'https://unpkg.com/canvaskit-wasm@0.19.0/bin/'+file});
-  ckLoaded.then((CanvasKit) => {
-    /*const surface = CanvasKit.MakeCanvasSurface('foo');
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.5.9/lottie.min.js"></script>
 
-    const paint = new CanvasKit.Paint();
-    paint.setColor(CanvasKit.Color4f(0.9, 0, 0, 1.0));
-    paint.setStyle(CanvasKit.PaintStyle.Stroke);
-    paint.setAntiAlias(true);
-    const rr = CanvasKit.RRectXY(CanvasKit.LTRBRect(10, 60, 210, 260), 25, 15);
+<script>
 
-    function draw(canvas) {
-      canvas.clear(CanvasKit.WHITE);
-      canvas.drawRRect(rr, paint);
-    }
-    surface.drawOnce(draw);*/
-    
-    fetch('https://assets1.lottiefiles.com/packages/lf20_paulmvj4.json').then((resp) => {
-      resp.text().then((jsonStr) => {
-        SkottieExample(CanvasKit, jsonStr);
-      });
-    });
-
-    function SkottieExample(CanvasKit, jsonStr) {
-      if (!CanvasKit || !jsonStr) {
-        return;
-      }
-      const animation = CanvasKit.MakeAnimation(jsonStr);
-      const duration = animation.duration() * 1000;
-      const bounds = CanvasKit.LTRBRect(0, 0, 500, 500);
-
-      const surface = CanvasKit.MakeCanvasSurface('foo');
-      if (!surface) {
-        console.log('Could not make surface');
-        return;
-      }
-      const context = CanvasKit.currentContext();
-      const skcanvas = surface.getCanvas();
-
-      let firstFrame = new Date().getTime();
-
-      function drawFrame() {
-        // settingCurrentContext required if there are multiple contexts
-        // on the same page.
-        CanvasKit.setCurrentContext(context);
-
-        let now = new Date().getTime();
-        let seek = ((now - firstFrame) / duration) % 1.0;
-        
-        animation.seek(seek);
-        animation.render(skcanvas, bounds);
-        skcanvas.flush();
-        requestAnimationFrame(drawFrame);
-      }
-      requestAnimationFrame(drawFrame);
-    }
-    
-  });
-  
-  
-  
-  // CanvasKit and canvas are provided in this scope.
+            var animation = bodymovin.loadAnimation({
+              container: document.getElementById('bm'),
+              renderer: 'canvas',
+              loop: true,
+              autoplay: true,
+              path: 'https://assets1.lottiefiles.com/packages/lf20_paulmvj4.json'
+            });
 
 </script>
